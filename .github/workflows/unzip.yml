@@ -1,0 +1,20 @@
+yaml
+name: Unzip Uploaded File
+
+on:
+  push:
+    branches:
+      - main # অথবা আপনার default branch এর নাম
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Find and Unzip file
+      run: |
+        unzip "./*.zip" -d . # এটি রিপোজিটরির রুটে থাকা প্রথম জিপ ফাইলটি আনজিপ করবে
+        rm "./*.zip" # আনজিপ করার পর জিপ ফাইলটি ডিলিট করে দেবে (ঐচ্ছিক)
+      continue-on-error: true # যদি জিপ ফাইল না থাকে বা আনজিপ না হয়, তবু অ্যাকশন চলতে থাকবে
